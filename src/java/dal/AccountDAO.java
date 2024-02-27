@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dal;
 
 import java.sql.PreparedStatement;
@@ -11,15 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Account;
 
-/**
- *
- * @author admin
- */
 public class AccountDAO extends DBContext {
     
     public List<Account> getAll() {
         List<Account> list = new ArrayList<>();
-        String sql = "select * from account";
+        String sql = "select * from account order by account_id";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -34,11 +26,11 @@ public class AccountDAO extends DBContext {
         return list;
     }
     
-    public Account get(int id) {
+    public Account get(int accountId) {
         Account account = null;
-        String sql = "select * from account where id = " + String.valueOf(id);
+        String query = "select * from account where id = " + String.valueOf(accountId);
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 account = new Account(rs.getInt("account_id"), rs.getString("username"), rs.getString("display_name"), rs.getString("email"), rs.getBoolean("verified"), rs.getFloat("balance"));
@@ -48,6 +40,60 @@ public class AccountDAO extends DBContext {
         }
 
         return account;
+    }
+    
+    public void add(Account account, String passwordHash) {
+        String query = "insert into student values ('" + account.getAccountId() + "', '" + account.getUsername() + "', '" + passwordHash + "', '" + account.getDisplayName() + "', '" + account.getEmail() + "', 'false', 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    // incomplete
+    public void updateAccount(Account account) {
+        String query = "select * from account where id = " + String.valueOf(account.getAccountId()); 
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                account = new Account(rs.getInt("account_id"), rs.getString("username"), rs.getString("display_name"), rs.getString("email"), rs.getBoolean("verified"), rs.getFloat("balance"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void changePassword(int accountId, String passwordHash) {
+        String query = "update account set password_hash = '" + passwordHash + "' where account_id = " + String.valueOf(accountId);
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void changeEmail(int accountId, String email) {
+        String query = "update account set email = '" + email + "' where account_id = " + String.valueOf(accountId);
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void changeDisplayName(int accountId, String displayName) {
+        String query = "update account set display_name = '" + displayName + "' where account_id = " + String.valueOf(accountId);
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
     
 }
