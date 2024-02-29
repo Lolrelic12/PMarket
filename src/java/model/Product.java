@@ -92,5 +92,9 @@ public class Product {
         this.stock = stock;
     }
     
+    public void modifyStock(int change) {
+        this.stock += change;
+    }
+    
     
 }

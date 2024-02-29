@@ -9,7 +9,7 @@ import model.Account;
 
 public class AccountDAO extends DBContext {
     
-    public List<Account> getAll() {
+    public List<Account> getAllAccounts() {
         List<Account> list = new ArrayList<>();
         String sql = "select * from account order by account_id";
         try {
@@ -26,7 +26,7 @@ public class AccountDAO extends DBContext {
         return list;
     }
     
-    public Account get(int accountId) {
+    public Account getAccount(int accountId) {
         Account account = null;
         String query = "select * from account where id = " + String.valueOf(accountId);
         try {
@@ -42,8 +42,8 @@ public class AccountDAO extends DBContext {
         return account;
     }
     
-    public void add(Account account, String passwordHash) {
-        String query = "insert into student values ('" + account.getAccountId() + "', '" + account.getUsername() + "', '" + passwordHash + "', '" + account.getDisplayName() + "', '" + account.getEmail() + "', 'false', 0";
+    public void addAccount(Account account, String passwordHash) {
+        String query = "insert into account values ('" + account.getAccountId() + "', '" + account.getUsername() + "', '" + passwordHash + "', '" + account.getDisplayName() + "', '" + account.getEmail() + "', 'false', 0";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.executeUpdate();

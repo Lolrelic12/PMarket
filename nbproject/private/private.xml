@@ -3,8 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/testbed/PMarket.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/model/Cart.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/model/Product.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/DBContext.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/model/Order.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/ReviewDAO.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/PurchaseHistoryDAO.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/OrderDAO.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/model/Review.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/CartDAO.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/model/PurchaseHistory.java</file>
             <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/AccountDAO.java</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/security/Hash.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/ProductDAO.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/model/Account.java</file>
         </group>
     </open-files>
 </project-private>
