@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 
 public class Email {
 
-    private static final String username = "conboquangdeptrai@gmail.com";
-    private static final String password = "unlx wean nbon fkgp";
+    private static final String username = "noreply.pmarket@gmail.com";
+    private static final String password = "ujdr bcbp ujuq yhkt";
 
     private static void sendMailTLS(String senderName, String toAddress, String subject, String text) throws UnsupportedEncodingException {
 
@@ -110,5 +110,4 @@ public class Email {
             }
         }
     }
-
 }

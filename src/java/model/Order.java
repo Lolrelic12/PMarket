@@ -21,15 +21,14 @@ public class Order {
     private LocalDateTime datePaid;
     private boolean completed;
 
-    public Order(int orderId, LocalDateTime dateCreated, LocalDateTime dateCompleted, float paymentAmount, boolean paid, LocalDateTime datePaid, boolean completed) {
+    public Order(int orderId, LocalDateTime dateCreated, float paymentAmount) {
         this.orderId = orderId;
         this.orderItems = new ArrayList();
         this.dateCreated = dateCreated;
-        this.dateCompleted = dateCompleted;
         this.paymentAmount = paymentAmount;
-        this.paid = paid;
-        this.datePaid = datePaid;
-        this.completed = completed;
+        this.paid = false;
+        this.datePaid = null;
+        this.completed = false;
     }
 
     public int getOrderId() {

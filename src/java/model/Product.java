@@ -16,19 +16,17 @@ public class Product {
     private String imageLink;
     private String category;
     private float price;
-    private float sale;
     private int stock;
 
     public Product() {}
 
-    public Product(int productId, String name, String description, String imageLink, String category, float price, float sale, int stock) {
+    public Product(int productId, String name, String description, String imageLink, String category, float price, int stock) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.imageLink = imageLink;
         this.category = category;
         this.price = price;
-        this.sale = sale;
         this.stock = stock;
     }
 
@@ -56,10 +54,6 @@ public class Product {
         return price;
     }
 
-    public float getSale() {
-        return sale;
-    }
-
     public int getStock() {
         return stock;
     }
@@ -84,16 +78,13 @@ public class Product {
         this.price = price;
     }
 
-    public void setSale(float sale) {
-        this.sale = sale;
-    }
-
     public void setStock(int stock) {
         this.stock = stock;
     }
     
     public void modifyStock(int change) {
         this.stock += change;
+        if (this.stock < 0) this.stock = 0;
     }
     
     

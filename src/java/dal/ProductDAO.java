@@ -11,12 +11,12 @@ public class ProductDAO extends DBContext {
 
     public Product getProduct(int productId) {
         Product product = null;
-        String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.sale, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id WHERE product_id = " + String.valueOf(productId);
+        String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id WHERE product_id = " + String.valueOf(productId);
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                product = new Product(rs.getInt("product_id"), rs.getString("name"), rs.getString("description"), rs.getString("imageLink"), rs.getString("category_name"), rs.getFloat("price"), rs.getFloat("sale"), rs.getInt("stock"));
+                product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"),rs.getFloat("price"), rs.getInt("stock"));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -27,28 +27,61 @@ public class ProductDAO extends DBContext {
     
     public String getCategoryName(int categoryId) {
         String categoryName = "";
-        String query = "SELECT FROM  WHERE product_id = " + String.valueOf(categoryId);
+        String query = "SELECT [name] FROM product_category WHERE product_category_id = " + String.valueOf(categoryId);
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                product = new Product(rs.getInt("product_id"), rs.getString("name"), rs.getString("description"), rs.getString("imageLink"), rs.getString("category_name"), rs.getFloat("price"), rs.getFloat("sale"), rs.getInt("stock"));
+                categoryName = rs.getString("name");
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
 
-        return product;
+        return categoryName;
     }
-
-    public List<Product> getAllProduct() {
-        ArrayList<Product> productList = new ArrayList();
-        String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.sale, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id WHERE product_id = " + String.valueOf(productId);
+    
+    public int getCategoryId(String categoryName) {
+        int categoryId = 0;
+        String query = "SELECT product_category_id FROM product_category WHERE [name] = '" + categoryName +'"';
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Product product = new Product(rs.getInt("product_id"), rs.getString("name"), rs.getString("description"), rs.getString("imageLink"), rs.getString("category_name"), rs.getFloat("price"), rs.getFloat("sale"), rs.getInt("stock"));
+                categoryName = rs.getString("product_category_id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+        return categoryId;
+    }
+
+    public List<Product> getAllProducts() {
+        ArrayList<Product> productList = new ArrayList();
+        String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"), rs.getFloat("price"), rs.getInt("stock"));
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return productList;
+    }
+    
+    public List<Product> getAllProductsContaining(String token) {
+        ArrayList<Product> productList = new ArrayList();
+        String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id WHERE p.name LIKE '%" + token + "%";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"), rs.getFloat("price"), rs.getInt("stock"));
                 productList.add(product);
             }
         } catch (SQLException e) {
@@ -59,7 +92,7 @@ public class ProductDAO extends DBContext {
     }
 
     public void addProduct(Product product) {
-        String query = "insert into product values ('" + product.getProductId()+ "', '" + "', '" + product.getName() + "', '" + product.getDescription() + "', '" + prod + "', '" + account.getEmail() + "', 'false', 0";
+        String query = "insert into product values (" + String.valueOf(product.getProductId()) + ", " + getCategoryId(product.getCategory()) + ", N'" + product.getName() + "', '" + product.getDescription() + "', '" + product.getImageLink() + "', '" + product + "', 'false', 0";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.executeUpdate();
@@ -68,20 +101,20 @@ public class ProductDAO extends DBContext {
         }
     }
 
-    public List<Product> getCartItems(int accountId) {
-        List<Product> productList = new ArrayList<>();
-        String query = "SELECT p.product_id, p.name AS product_name, p.image_link, p.price, p.rating, cd.count FROM cart_detail cd JOIN cart c ON cd.cart_id = c.cart_id JOIN product p ON cd.product_id = p.product_id WHERE c.account_id = " + String.valueOf(accountId) + " ORDER BY date_added DESC;";
+    public int getStock(int productId) {
+        int stock = 0;
+        String query = "SELECT stock FROM product WHERE product_id = " + String.valueOf(productId);
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Product product = new Product(rs.getInt("product_id"), rs.getString("name"), rs.getString("description"), rs.getString("image_link"), rs.getBoolean("verified"), rs.getFloat("balance"));
-                productList.add(product);
+                stock = rs.getInt("stock");
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-
-        return productList;
+        
+        return stock;
     }
+    
 }

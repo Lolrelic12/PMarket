@@ -7,9 +7,7 @@ public class Cart {
     private int cartId;
     private ArrayList<Product> cartItems;
     
-    public Cart() {
-        
-    }
+    public Cart() {}
 
     public Cart(int cartId) {
         this.cartId = cartId;
@@ -73,6 +71,10 @@ public class Cart {
 
     public boolean isEmpty() {
         return cartItems.isEmpty();
+    }
+    
+    public void setCart(ArrayList<Product> itemList) {
+        this.cartItems = itemList;
     }
 
 }

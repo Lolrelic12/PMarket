@@ -14,14 +14,13 @@ import java.util.HashMap;
  */
 public class PurchaseHistory {
     private int purchaseHistoryId;
-    private ArrayList<HashMap> purchaseHistory;
-    HashMap<Product, LocalDateTime> entry;
+    HashMap<Integer, LocalDateTime> purchaseHistory;
     
     public PurchaseHistory() {}
     
     public PurchaseHistory(int purchaseHistoryId) {
         this.purchaseHistoryId = purchaseHistoryId;
-        purchaseHistory = new ArrayList();
+        purchaseHistory = new HashMap();
         
     }
     
@@ -33,13 +32,11 @@ public class PurchaseHistory {
         this.purchaseHistoryId = id;
     }
     
-    public ArrayList<HashMap> getAllEntries() {
+    public HashMap<Integer, LocalDateTime> getAllEntries() {
         return purchaseHistory;
     }
     
-    public void addEntry(Product product, LocalDateTime date) {
-        entry = new HashMap();
-        entry.put(product, date);
-        purchaseHistory.add(entry);
+    public void addEntry(int productId, LocalDateTime date) {
+        purchaseHistory.put(productId, date);
     }
 }

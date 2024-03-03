@@ -48,4 +48,15 @@ public class Hash {
         return output;
     }
     
+    public static String getHash(String input) {
+        String output = "";
+        try {
+            output = toHexString(getSHA(input, "SHA-256"));
+        } catch (NoSuchAlgorithmException nsae) {
+            System.err.println("Unsupported hash algorithm!");
+        }
+
+        return output;
+    }
+    
 }
