@@ -58,7 +58,7 @@ public class productdetails extends HttpServlet {
         ProductDAO pd = new ProductDAO();
         int productId = Integer.parseInt(request.getParameter("id"));
         Product p = pd.getProduct(productId);
-        request.setAttribute("data", p);
+        request.setAttribute("product", p);
         request.getRequestDispatcher("productdetails.jsp").forward(request, response);
     } 
 

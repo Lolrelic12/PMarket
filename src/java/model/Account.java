@@ -31,6 +31,17 @@ public class Account {
         this.cart = new Cart();
         this.purchaseHistory = new PurchaseHistory();
     }
+    
+    public Account(String username, String displayName, String email) {
+        this.accountId = accountId;
+        this.username = username;
+        this.displayName = displayName;
+        this.email = email;
+        this.verified = false;
+        this.balance = 0;
+        this.cart = new Cart();
+        this.purchaseHistory = new PurchaseHistory();
+    }
 
     public int getAccountId() {
         return accountId;

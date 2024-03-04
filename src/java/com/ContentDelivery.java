@@ -51,4 +51,17 @@ public class ContentDelivery {
 
         Email.sendMail(senderName, toAddress, subject, content);
     }
+    
+    public static void sendPasswordResetConfirmation(String emailAddress, String username, String displayName, String code) {
+        String senderName = "PMarket";
+        String toAddress = emailAddress;
+
+        String subject = "Recent password reset for account " + username;
+
+        String content = "Hi " + displayName + ",\n\n";
+        content += "The password for your account " + username + " has recently been updated.\n\n";
+        content += "Thank you for shopping with PMarket! \n\nSent at: " + LocalDateTime.now();
+
+        Email.sendMail(senderName, toAddress, subject, content);
+    }
 }

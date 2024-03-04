@@ -11,17 +11,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Account;
-import dal.AccountDAO;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
-import security.Hash;
 
 /**
  *
  * @author admin
  */
-public class login extends HttpServlet {
+public class logout extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +34,10 @@ public class login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet login</title>");  
+            out.println("<title>Servlet logout</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet login at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet logout at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,25 +68,7 @@ public class login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
-        AccountDAO ad = new AccountDAO();
-        String username = request.getParameter("username");
-        String passwordHash = Hash.getHash(request.getParameter("password"), "SHA-256");
-
-        int status = ad.verifyLogin(username, passwordHash);
-
-        if (status == -1) {
-            request.setAttribute("error", "Account doesn't exist.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else if (status == 0) {
-            request.setAttribute("error", "Incorrect password.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-        out.println("Login successful! Redirecting...");
-        Cookie ck = new Cookie("userId", String.valueOf(ad.getAccountIdByUsername(username)));
-        ck.setMaxAge(60 * 60);
-        response.addCookie(ck);
-        session.setAttribute("userid", String.valueOf(ad.getAccountIdByUsername(username)));
+        session.invalidate();
         
         request.getRequestDispatcher("listitems").forward(request, response);
     }

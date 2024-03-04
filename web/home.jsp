@@ -22,18 +22,21 @@
             AccountDAO ad = new AccountDAO();
                 List<Product> productList = (List<Product>)request.getAttribute("data");
                 Cookie[] ck = request.getCookies();  
-                String accountId = (String)session.getAttribute("userid");
-                if (accountId != null) {
-                Account a = ad.getAccountById(Integer.parseInt(accountId));
+                String userId = (String)session.getAttribute("userid");
+                
+                if (userId != null) {
+                        Account a = ad.getAccountById(Integer.parseInt(userId));
         %>
-        <p>Welcome, <%= a.getDisplayName() %></p>
-        <a href="login.jsp">Logout</a>
-
+        <p>Welcome, <a href="account.jsp?userid=<%= a.getAccountId() %>"><%= a.getDisplayName() %></a></p>
+        <form action="logout" method="post">
+            <button type="submit">Logout</button>
+        </form>
         <% 
             } else {
         %>
 
         <a href="login.jsp">Login</a>
+        <a href="register.jsp">Register</a>
         <%}%>
 
         <table style="border-style: none">
@@ -49,7 +52,7 @@
                 <td><img src="<%= p.getImageLink() %>" alt="<%= p.getName() %>" width="150" height="60"></td> 
                 <td><a href="productdetails?id=<%= p.getProductId() %>"><%= p.getName() %></a></td> 
                 <td><%= p.getDescription() %></td>
-                <td><%= p.getPrice() %></td>
+                <td><%= p.getPrice() %> VND</td>
                 <td><%= p.getStock() %></td>
             </tr>
             <%}}%>

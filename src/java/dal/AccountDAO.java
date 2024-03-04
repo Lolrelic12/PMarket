@@ -60,7 +60,7 @@ public class AccountDAO extends DBContext {
     
     public int getAccountIdByUsername(String username) {
         int accountId = 0;
-        String query = "select account_id from account where username = " + username;
+        String query = "select account_id from account where username = '" + username + "'";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
@@ -75,7 +75,7 @@ public class AccountDAO extends DBContext {
     }
 
     public void addAccount(Account account, String passwordHash) {
-        String query = "insert into account (account_id, username, password_hash, display_name, email, verified, balance, [admin]) values (" + account.getAccountId() + ", '" + account.getUsername() + "', '" + passwordHash + "', N'" + account.getDisplayName() + "', '" + account.getEmail() + "', 'false', 0, 'false'";
+        String query = "insert into account (username, password_hash, display_name, email, verified, balance) values ('" + account.getUsername() + "', '" + passwordHash + "', N'" + account.getDisplayName() + "', '" + account.getEmail() + "', 'false', 0)";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.executeUpdate();
@@ -171,6 +171,26 @@ public class AccountDAO extends DBContext {
     public boolean accountExists(String username) {
         int count = 0;
         String query = "SELECT COUNT(account_id) as matching_ids FROM account WHERE username = '" + username + "';";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt("matching_ids");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        if (count == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean emailExists(String email) {
+        int count = 0;
+        String query = "SELECT COUNT(account_id) as matching_ids FROM account WHERE email = '" + email + "';";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();

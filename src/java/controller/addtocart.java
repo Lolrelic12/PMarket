@@ -5,12 +5,16 @@
 
 package controller;
 
+import dal.CartDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Product;
 
 /**
  *
@@ -66,7 +70,17 @@ public class addtocart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        ProductDAO pd = new ProductDAO();
+        CartDAO cd = new CartDAO();
+        int userId = Integer.parseInt((String)session.getAttribute("userid"));
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int amount = Integer.parseInt(request.getParameter("amount"));
+        
+        cd.addToCart(userId, productId, amount);
+        Product p = pd.getProduct(productId);
+        request.setAttribute("product", p);
+        request.getRequestDispatcher("productdetails.jsp").forward(request, response);
     }
 
     /** 

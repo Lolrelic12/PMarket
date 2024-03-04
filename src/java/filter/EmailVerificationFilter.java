@@ -15,15 +15,14 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.annotation.WebFilter;
 
 /**
  *
- * @author Tung
+ * @author admin
  */
-public class LoginFilter implements Filter {
+@WebFilter(filterName="EmailVerificationFilter", urlPatterns={"/*"})
+public class EmailVerificationFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -32,12 +31,12 @@ public class LoginFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public LoginFilter() {
+    public EmailVerificationFilter() {
     } 
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
 	throws IOException, ServletException {
-	if (debug) log("LoginFilter:DoBeforeProcessing");
+	if (debug) log("EmailVerificationFilter:DoBeforeProcessing");
 
 	// Write code here to process the request and/or response before
 	// the rest of the filter chain is invoked.
@@ -64,7 +63,7 @@ public class LoginFilter implements Filter {
 
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
 	throws IOException, ServletException {
-	if (debug) log("LoginFilter:DoAfterProcessing");
+	if (debug) log("EmailVerificationFilter:DoAfterProcessing");
 
 	// Write code here to process the request and/or response after
 	// the rest of the filter chain is invoked.
@@ -100,17 +99,9 @@ public class LoginFilter implements Filter {
                          FilterChain chain)
 	throws IOException, ServletException {
 
-	if (debug) log("LoginFilter:doFilter()");
+	if (debug) log("EmailVerificationFilter:doFilter()");
 
 	doBeforeProcessing(request, response);
-        
-        HttpServletRequest req = (HttpServletRequest)request;
-        HttpServletResponse res = (HttpServletResponse)response;
-        HttpSession session = req.getSession();
-        if (session.getAttribute("userid") == null) {
-            res.sendRedirect("login.jsp");
-        }
-        
 	
 	Throwable problem = null;
 	try {
@@ -164,7 +155,7 @@ public class LoginFilter implements Filter {
 	this.filterConfig = filterConfig;
 	if (filterConfig != null) {
 	    if (debug) { 
-		log("LoginFilter:Initializing filter");
+		log("EmailVerificationFilter:Initializing filter");
 	    }
 	}
     }
@@ -174,8 +165,8 @@ public class LoginFilter implements Filter {
      */
     @Override
     public String toString() {
-	if (filterConfig == null) return ("LoginFilter()");
-	StringBuffer sb = new StringBuffer("LoginFilter(");
+	if (filterConfig == null) return ("EmailVerificationFilter()");
+	StringBuffer sb = new StringBuffer("EmailVerificationFilter(");
 	sb.append(filterConfig);
 	sb.append(")");
 	return (sb.toString());
