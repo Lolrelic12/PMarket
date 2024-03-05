@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/addtocart</url-pattern>
+        <url-pattern>/account.jsp</url-pattern>
+        <url-pattern>/cart.jsp</url-pattern>
+        <url-pattern>/topup.jsp</url-pattern>
+        <url-pattern>/history.jsp</url-pattern>
+        <url-pattern>/checkout.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/management.jsp</url-pattern>
+        <url-pattern>/deleteproduct</url-pattern>
+        <url-pattern>/addproduct</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>login</servlet-name>
         <servlet-class>controller.login</servlet-class>
@@ -43,6 +58,58 @@
     <servlet>
         <servlet-name>logout</servlet-name>
         <servlet-class>controller.logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changeemail</servlet-name>
+        <servlet-class>controller.changeemail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changepassword</servlet-name>
+        <servlet-class>controller.changepassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changename</servlet-name>
+        <servlet-class>controller.changename</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteaccount</servlet-name>
+        <servlet-class>controller.deleteaccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>removefromcart</servlet-name>
+        <servlet-class>controller.removefromcart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>createorder</servlet-name>
+        <servlet-class>controller.createorder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>topup</servlet-name>
+        <servlet-class>controller.topup</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>purchase</servlet-name>
+        <servlet-class>controller.purchase</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminlogin</servlet-name>
+        <servlet-class>controller.adminlogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>resetpassword</servlet-name>
+        <servlet-class>controller.resetpassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>forgetpassword</servlet-name>
+        <servlet-class>controller.forgetpassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteproduct</servlet-name>
+        <servlet-class>controller.deleteproduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addproduct</servlet-name>
+        <servlet-class>controller.addproduct</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -88,17 +155,70 @@
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-    
-    <filter>  
-        <filter-name>LoginFilter</filter-name>  
-        <filter-class>filter.LoginFilter</filter-class>  
-    </filter>  
-   
-    <filter-mapping>  
-        <filter-name>LoginFilter</filter-name>  
-        <url-pattern>/addtocart</url-pattern>  
-    </filter-mapping>  
-    
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>filter.LoginFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filter.AdminFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>EmailVerificationFilter</filter-name>
+        <filter-class>filter.EmailVerificationFilter</filter-class>
+    </filter>
+    <servlet-mapping>
+        <servlet-name>changeemail</servlet-name>
+        <url-pattern>/changeemail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changepassword</servlet-name>
+        <url-pattern>/changepassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changename</servlet-name>
+        <url-pattern>/changename</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteaccount</servlet-name>
+        <url-pattern>/deleteaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>removefromcart</servlet-name>
+        <url-pattern>/removefromcart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createorder</servlet-name>
+        <url-pattern>/createorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>topup</servlet-name>
+        <url-pattern>/topup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>purchase</servlet-name>
+        <url-pattern>/purchase</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminlogin</servlet-name>
+        <url-pattern>/adminlogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resetpassword</servlet-name>
+        <url-pattern>/resetpassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>forgetpassword</servlet-name>
+        <url-pattern>/forgetpassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteproduct</servlet-name>
+        <url-pattern>/deleteproduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addproduct</servlet-name>
+        <url-pattern>/addproduct</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

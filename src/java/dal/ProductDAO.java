@@ -16,7 +16,7 @@ public class ProductDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"),rs.getFloat("price"), rs.getInt("stock"));
+                product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"),rs.getFloat("price"), 1);
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -57,14 +57,31 @@ public class ProductDAO extends DBContext {
         return categoryId;
     }
 
-    public List<Product> getAllProducts() {
+    public ArrayList<Product> getAllProducts() {
         ArrayList<Product> productList = new ArrayList();
         String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Product product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"), rs.getFloat("price"), rs.getInt("stock"));
+                Product product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"), rs.getFloat("price"), 1);
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return productList;
+    }
+    
+    public List<Product> getAllProductsOfCategory(int categoryId) {
+        ArrayList<Product> productList = new ArrayList();
+        String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id WHERE pc.product_category_id = " + String.valueOf(categoryId);
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"), rs.getFloat("price"), 1);
                 productList.add(product);
             }
         } catch (SQLException e) {
@@ -76,12 +93,12 @@ public class ProductDAO extends DBContext {
     
     public List<Product> getAllProductsContaining(String token) {
         ArrayList<Product> productList = new ArrayList();
-        String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id WHERE p.name LIKE '%" + token + "%";
+        String query = "SELECT p.product_id, p.[name] as product_name, p.[description] as product_description, p.image_link, pc.[name] as category_name, p.price, p.stock FROM product p LEFT JOIN product_category pc ON p.product_category_id = pc.product_category_id WHERE p.name LIKE '%" + token + "%'";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Product product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"), rs.getFloat("price"), rs.getInt("stock"));
+                Product product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("product_description"), rs.getString("image_link"), rs.getString("category_name"), rs.getFloat("price"), 1);
                 productList.add(product);
             }
         } catch (SQLException e) {
@@ -91,8 +108,8 @@ public class ProductDAO extends DBContext {
         return productList;
     }
 
-    public void addProduct(Product product) {
-        String query = "insert into product values (" + String.valueOf(product.getProductId()) + ", " + getCategoryId(product.getCategory()) + ", N'" + product.getName() + "', '" + product.getDescription() + "', '" + product.getImageLink() + "', '" + product + "', 'false', 0";
+    public void addProduct(Product p) {
+        String query = "insert into product ([name], [description], image_link, product_category_id, price, stock) values ('" + p.getName() + "', '" + p.getDescription() + "', '" + p.getImageLink() + "', " + String.valueOf(p.getCategoryId()) + ", " + p.getPrice() + ", 1)";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.executeUpdate();
@@ -115,6 +132,16 @@ public class ProductDAO extends DBContext {
         }
         
         return stock;
+    }
+    
+    public void removeProduct(int productId) {
+        String query = "DELETE FROM product WHERE product_id = " + String.valueOf(productId);
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
     
 }

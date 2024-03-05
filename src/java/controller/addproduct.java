@@ -12,16 +12,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Account;
-import dal.AccountDAO;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpSession;
-import security.Hash;
+import dal.ProductDAO;
+import model.Product;
 
 /**
  *
  * @author admin
  */
-public class login extends HttpServlet {
+public class addproduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +36,10 @@ public class login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet login</title>");  
+            out.println("<title>Servlet addproduct</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet login at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet addproduct at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,27 +69,16 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
-        AccountDAO ad = new AccountDAO();
-        String username = request.getParameter("username");
-        String passwordHash = Hash.getHash(request.getParameter("password"), "SHA-256");
-
-        int status = ad.verifyLogin(username, passwordHash);
-
-        if (status == -1) {
-            request.setAttribute("error", "Account doesn't exist.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            return;
-        } else if (status == 0) {
-            request.setAttribute("error", "Incorrect password.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            return;
-        }
-        out.println("Login successful! Redirecting...");
-        session.setAttribute("userid", String.valueOf(ad.getAccountIdByUsername(username)));
+        ProductDAO pd = new ProductDAO();
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String imageLink = request.getParameter("imagelink");
+        float price = Float.parseFloat(request.getParameter("price"));
+        int categoryId = Integer.parseInt(request.getParameter("category"));
         
-        request.getRequestDispatcher("listitems").forward(request, response);
+        Product product = new Product(name, description, imageLink, categoryId, price, 1);
+        pd.addProduct(product);
+        request.getRequestDispatcher("management.jsp").forward(request, response);
     }
 
     /** 

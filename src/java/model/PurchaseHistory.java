@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class PurchaseHistory {
     private int purchaseHistoryId;
-    HashMap<Integer, LocalDateTime> purchaseHistory;
+    HashMap<Integer, LocalDate> purchaseHistory;
     
     public PurchaseHistory() {}
     
@@ -32,11 +32,11 @@ public class PurchaseHistory {
         this.purchaseHistoryId = id;
     }
     
-    public HashMap<Integer, LocalDateTime> getAllEntries() {
+    public HashMap<Integer, LocalDate> getAllEntries() {
         return purchaseHistory;
     }
     
-    public void addEntry(int productId, LocalDateTime date) {
+    public void addEntry(int productId, LocalDate date) {
         purchaseHistory.put(productId, date);
     }
 }

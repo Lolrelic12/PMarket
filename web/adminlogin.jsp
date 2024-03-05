@@ -14,15 +14,12 @@
     </head>
     <body>
         <h1><a href="home.jsp">PMarket</a></h1>
-        <h3><a href="home.jsp">< Back to home </a></h3>
-        <h2>Login to your PMarket account</h2>
-        <form action="login" method="post">
+        <h2>Management console</h2>
+        <form action="adminlogin" method="post">
             <label for="usernameField">Username:</label> <input type="text" id="usernameField" name="username" required="required"><br>
             <label for="passwordField">Password:</label> <input type="password" id="passwordField" name="password" required="required"><br>
             <p style="color : red">${requestScope.error}</p>
             <button type="submit">Login</button>
         </form>
-            <p>Don't have a PMarket account? <a href="register.jsp">Create an account</a></p>
-            <p>Problem accessing your account? <a href="forgetpassword.jsp">Reset password</a></p>
     </body>
 </html>

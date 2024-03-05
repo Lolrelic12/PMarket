@@ -11,12 +11,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import dal.CartDAO;
 
 /**
  *
  * @author admin
  */
-public class listcartitems extends HttpServlet {
+public class removefromcart extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +34,10 @@ public class listcartitems extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet listcartitems</title>");  
+            out.println("<title>Servlet removefromcart</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet listcartitems at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet removefromcart at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,7 +54,12 @@ public class listcartitems extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        CartDAO cd = new CartDAO();
+        int userId = Integer.parseInt(request.getParameter("userid"));
+        int productId = Integer.parseInt(request.getParameter("productid"));
+        
+        cd.removeFromCart(cd.getCartId(userId), productId);
+        request.getRequestDispatcher("cart.jsp").forward(request, response);
     } 
 
     /** 

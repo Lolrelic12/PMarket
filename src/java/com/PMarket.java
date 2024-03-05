@@ -5,6 +5,7 @@
 package com;
 
 import com.ContentDelivery;
+import java.time.LocalDateTime;
 import model.Account;
 import security.Hash;
 import ultility.KeyGenerator;
@@ -27,6 +28,8 @@ public class PMarket {
         
         // System.out.println(Hash.getHash("password"));
         
-        System.out.println(KeyGenerator.generateKey());
+        // System.out.println(KeyGenerator.generateKey());
+        
+        System.out.println(LocalDateTime.now().toLocalDate());
     }
 }

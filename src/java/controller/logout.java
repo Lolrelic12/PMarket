@@ -54,7 +54,10 @@ public class logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        session.invalidate();
+        
+        request.getRequestDispatcher("listitems").forward(request, response);
     } 
 
     /** 
@@ -70,7 +73,7 @@ public class logout extends HttpServlet {
         HttpSession session = request.getSession();
         session.invalidate();
         
-        request.getRequestDispatcher("listitems").forward(request, response);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     /** 

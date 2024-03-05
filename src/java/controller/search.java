@@ -5,12 +5,15 @@
 
 package controller;
 
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+
 
 /**
  *
@@ -53,7 +56,12 @@ public class search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        ProductDAO pd = new ProductDAO();
+        String searchToken = request.getParameter("searchToken");
+        List productList = pd.getAllProductsContaining(searchToken);
+        request.setAttribute("data", productList);
+        request.setAttribute("searchToken", searchToken);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     } 
 
     /** 

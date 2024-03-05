@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import model.Account;
 
-public class AuthorizationFilter implements Filter {
+public class AdminFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -28,7 +28,7 @@ public class AuthorizationFilter implements Filter {
     // configured.
     private FilterConfig filterConfig = null;
 
-    public AuthorizationFilter() {
+    public AdminFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
@@ -97,47 +97,43 @@ public class AuthorizationFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
 
-//        if (debug) {
-//            log("AuthorizationFilter:doFilter()");
-//        }
-//
-//        doBeforeProcessing(request, response);
-//
-//        HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse res = (HttpServletResponse) response;
-//        HttpSession session = req.getSession();
-//
-//        if (session.getAttribute("account") != null) {
-//            Account user = (Account) session.getAttribute("account");
-//            if (user.getRole() == 2) {
-//                res.sendRedirect("authorization.jsp");
-//            }
-//        }
-//
-//        Throwable problem = null;
-//        try {
-//            chain.doFilter(request, response);
-//        } catch (Throwable t) {
-//            // If an exception is thrown somewhere down the filter chain,
-//            // we still want to execute our after processing, and then
-//            // rethrow the problem after that.
-//            problem = t;
-//            t.printStackTrace();
-//        }
-//
-//        doAfterProcessing(request, response);
-//
-//        // If there was a problem, we want to rethrow it if it is
-//        // a known type, otherwise log it.
-//        if (problem != null) {
-//            if (problem instanceof ServletException) {
-//                throw (ServletException) problem;
-//            }
-//            if (problem instanceof IOException) {
-//                throw (IOException) problem;
-//            }
-//            sendProcessingError(problem, response);
-//        }
+        if (debug) {
+            log("AdminFilter:doFilter()");
+        }
+
+        doBeforeProcessing(request, response);
+
+        HttpServletRequest req = (HttpServletRequest)request;
+        HttpServletResponse res = (HttpServletResponse)response;
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userid") == null) {
+            res.sendRedirect("listitems");
+        }
+
+        Throwable problem = null;
+        try {
+            chain.doFilter(request, response);
+        } catch (Throwable t) {
+            // If an exception is thrown somewhere down the filter chain,
+            // we still want to execute our after processing, and then
+            // rethrow the problem after that.
+            problem = t;
+            t.printStackTrace();
+        }
+
+        doAfterProcessing(request, response);
+
+        // If there was a problem, we want to rethrow it if it is
+        // a known type, otherwise log it.
+        if (problem != null) {
+            if (problem instanceof ServletException) {
+                throw (ServletException) problem;
+            }
+            if (problem instanceof IOException) {
+                throw (IOException) problem;
+            }
+            sendProcessingError(problem, response);
+        }
     }
 
     /**

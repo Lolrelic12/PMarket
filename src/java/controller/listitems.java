@@ -60,7 +60,10 @@ public class listitems extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        ProductDAO pd = new ProductDAO();
+        List productList = pd.getAllProducts();
+        request.setAttribute("data", productList);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     /**

@@ -9,8 +9,8 @@ import model.Account;
 
 public class AccountDAO extends DBContext {
 
-    public List<Account> getAllAccounts() {
-        List<Account> list = new ArrayList<>();
+    public ArrayList<Account> getAllAccounts() {
+        ArrayList<Account> list = new ArrayList<>();
         String sql = "select * from account order by account_id";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -41,7 +41,7 @@ public class AccountDAO extends DBContext {
 
         return account;
     }
-    
+
     public Account getAccountByUsername(String username) {
         Account account = null;
         String query = "select * from account where username = " + username;
@@ -57,7 +57,7 @@ public class AccountDAO extends DBContext {
 
         return account;
     }
-    
+
     public int getAccountIdByUsername(String username) {
         int accountId = 0;
         String query = "select account_id from account where username = '" + username + "'";
@@ -187,10 +187,10 @@ public class AccountDAO extends DBContext {
             return false;
         }
     }
-    
+
     public boolean emailExists(String email) {
         int count = 0;
-        String query = "SELECT COUNT(account_id) as matching_ids FROM account WHERE email = '" + email + "';";
+        String query = "SELECT COUNT(account_id) as matching_ids FROM account WHERE email = '" + email + "'";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
@@ -206,6 +206,22 @@ public class AccountDAO extends DBContext {
         } else {
             return false;
         }
+    }
+
+    public boolean getVerifiedStatus(int accountId) {
+        boolean verified = false;
+        String query = "SELECT verified FROM account WHERE account_id = '" + String.valueOf(accountId) + "';";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                verified = rs.getBoolean("verified");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return verified;
     }
 
     public int verifyLogin(String username, String passwordHash) {
@@ -231,15 +247,41 @@ public class AccountDAO extends DBContext {
         }
         return -1;
     }
-    
+
     public void setVerifiedStatus(int accountId, boolean verified) {
-        String query = "update account set verified = '" + verified +"' where account_id = " + String.valueOf(accountId);
+        String query = "update account set verified = '" + verified + "' where account_id = " + String.valueOf(accountId);
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public void deleteAccount(int accountId) {
+        String query = "delete from account where account_id = " + String.valueOf(accountId);
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public int getAccountIdByEmail(String email) {
+        int accountId = 0;
+        String query = "select account_id from account where email = '" + email + "'";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                accountId = rs.getInt("account_id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return accountId;
     }
 
 }

@@ -4,22 +4,22 @@
  */
 package controller;
 
-import dal.CartDAO;
-import dal.ProductDAO;
+import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Product;
+import com.ContentDelivery;
+import model.Account;
+import ultility.KeyGenerator;
 
 /**
  *
  * @author admin
  */
-public class addtocart extends HttpServlet {
+public class resetpassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class addtocart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addtocart</title>");
+            out.println("<title>Servlet resetpassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addtocart at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet resetpassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +59,27 @@ public class addtocart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        AccountDAO ad = new AccountDAO();
+        String email = request.getParameter("email");
+
+        if (!ad.emailExists(email)) {
+            request.setAttribute("error", "This email address is unregistered.");
+            request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
+        } else {
+            int accountId = ad.getAccountIdByEmail(email);
+            if (!ad.getVerifiedStatus(accountId)) {
+                request.setAttribute("error", "This email address is not yet verified.");
+                request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
+            } else {
+                Account a = ad.getAccountById(accountId);
+                String verificationCode = KeyGenerator.generateVerificationCode();
+                ContentDelivery.sendPasswordResetRequest(a.getEmail(), a.getUsername(), a.getDisplayName(), verificationCode);
+                request.setAttribute("userid", a.getAccountId());
+                request.setAttribute("template", verificationCode);
+                request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
+            }
+        }
+
     }
 
     /**
@@ -73,24 +93,20 @@ public class addtocart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        ProductDAO pd = new ProductDAO();
-        CartDAO cd = new CartDAO();
-        int userId = Integer.parseInt((String) session.getAttribute("userid"));
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        int amount = Integer.parseInt(request.getParameter("amount"));
-
-        if (cd.getCartDetailId(cd.getCartId(userId), productId) != 0) {
-            cd.modifyItemCount(cd.getCartId(userId), productId, amount);
-            Product p = pd.getProduct(productId);
-            request.setAttribute("product", p);
-            request.getRequestDispatcher("productdetails.jsp").forward(request, response);
-        } else {
-            cd.addToCart(userId, productId, amount);
-            Product p = pd.getProduct(productId);
-            request.setAttribute("product", p);
-            request.getRequestDispatcher("productdetails.jsp").forward(request, response);
+        String userid = request.getParameter("userid");
+        String verificationCode = request.getParameter("template");
+        String input = request.getParameter("response");
+        
+        if (!verificationCode.equals(input)) {
+            request.setAttribute("error", "Incorrect verification code.");
+            request.setAttribute("userid", userid);
+            request.setAttribute("template", verificationCode);
+            request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
+            return;
         }
+
+        request.setAttribute("userid", userid);
+        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
     }
 
     /**

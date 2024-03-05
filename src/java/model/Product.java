@@ -15,6 +15,7 @@ public class Product {
     private String description;
     private String imageLink;
     private String category;
+    private int categoryId;
     private float price;
     private int stock;
 
@@ -26,6 +27,15 @@ public class Product {
         this.description = description;
         this.imageLink = imageLink;
         this.category = category;
+        this.price = price;
+        this.stock = stock;
+    }
+    
+    public Product(String name, String description, String imageLink, int categoryId, float price, int stock) {
+        this.name = name;
+        this.description = description;
+        this.imageLink = imageLink;
+        this.categoryId = categoryId;
         this.price = price;
         this.stock = stock;
     }
@@ -85,6 +95,14 @@ public class Product {
     public void modifyStock(int change) {
         this.stock += change;
         if (this.stock < 0) this.stock = 0;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
     
     

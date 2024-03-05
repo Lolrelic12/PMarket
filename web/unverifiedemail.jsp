@@ -1,6 +1,6 @@
 <%-- 
-    Document   : postpurchase
-    Created on : 1 Mar 2024, 19:47:01
+    Document   : unverifiedemail
+    Created on : 5 Mar 2024, 14:03:46
     Author     : admin
 --%>
 
@@ -15,14 +15,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <script src="js/script.js" type="text/javascript"></script>
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
         <h1><a href="home.jsp">PMarket</a></h1>
         <%
             AccountDAO ad = new AccountDAO();
-                List<Product> productList = (List<Product>)request.getAttribute("data");
                 String userId = (String)session.getAttribute("userid");
                 Account a = new Account();
                 
@@ -35,7 +33,7 @@
         <form action="logout" method="post">
             <button type="submit">Logout</button>
         </form>
-        <h3><a href="home.jsp">< Back to home </a></h3>
+        <h3><a href="cart.jsp">< Back to cart </a></h3>
         <% 
             } else {
         %>
@@ -44,9 +42,9 @@
         <a href="register.jsp">Register</a>
         <%};%>
         
-        <h2>Purchase complete!</h2>
-        <p>Thank you for shopping with PMarket.</p>
-        <p>Your purchases will arrive in your email inbox shortly.</p>
-        <a href="listitems">Return to homepage</a>
+        <p>Error: Your email <%= a.getEmail() %> is not yet verified.</p>
+        <p>Please go to your profile and verify your email to be able to purchase and receive goods from PMarket.</p>
+        <a href="account.jsp">To my profile</a>
+        
     </body>
 </html>

@@ -7,6 +7,7 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,24 +45,25 @@ public class PurchaseHistoryDAO extends DBContext {
         return purchaseHistoryId;
     }
 
-    public HashMap<Integer, LocalDateTime> getHistory(int purchaseHistoryId) {
-        HashMap<Integer, LocalDateTime> history = new HashMap();
-        String query = "SELECT product_id , date_bought FROM history_detail hd LEFT JOIN purchase_history ph ON hd.history_id = ph.purchase_history_id WHERE ";
+    public HashMap<Integer, LocalDate> getHistory(int accountId) {
+        HashMap<Integer, LocalDate> history = new HashMap();
+        int purchaseHistoryId = getPurchaseHistoryId(accountId);
+        String query = "SELECT hd.product_id , hd.date_bought FROM history_detail hd LEFT JOIN purchase_history ph ON hd.history_id = ph.purchase_history_id WHERE ph.purchase_history_id = " + String.valueOf(purchaseHistoryId) + " ORDER BY hd.history_detail_id DESC";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                history.put(rs.getInt("product_id"), DateConverter.convertToLocalDateTimeViaInstant(rs.getDate("date_bought")));
+                history.put(rs.getInt("product_id"), rs.getDate("date_bought").toLocalDate());
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-
+        
         return history;
     }
 
     public void addEntry(int accountId, int productId, LocalDateTime dateBought) {
-        String query = "INSERT INTO history_detail VALUES (" + getPurchaseHistoryId(accountId) + ", " + String.valueOf(productId) + ", '" + DateConverter.convertToDateViaInstant(dateBought) + "')";
+        String query = "INSERT INTO history_detail VALUES (" + getPurchaseHistoryId(accountId) + ", " + String.valueOf(productId) + ", '" + dateBought.toLocalDate() + "')";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.executeUpdate();

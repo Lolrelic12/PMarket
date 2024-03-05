@@ -13,7 +13,7 @@ import java.util.List;
 public class AdminDAO extends DBContext {
     public boolean accountExists(String username) {
         int count = 0;
-        String query = "SELECT COUNT(admin_id) as matching_ids FROM [admin] WHERE username = '" + username + "';";
+        String query = "SELECT COUNT(admin_id) as matching_ids FROM [admin_account] WHERE username = '" + username + "'";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
@@ -34,7 +34,7 @@ public class AdminDAO extends DBContext {
     public int verifyLogin(String username, String passwordHash) {
         if (accountExists(username)) {
             String checkHash = "";
-            String query = "SELECT password_hash FROM admin WHERE username = '" + username + "'";
+            String query = "SELECT password_hash FROM [admin_account] WHERE username = '" + username + "'";
             try {
                 PreparedStatement st = connection.prepareStatement(query);
                 ResultSet rs = st.executeQuery();
@@ -47,7 +47,7 @@ public class AdminDAO extends DBContext {
 
             if (passwordHash.equals(checkHash)) {
                 return 1;
-            } else if (!passwordHash.equals(passwordHash)) {
+            } else if (!passwordHash.equals(checkHash)) {
                 return 0;
             }
         }

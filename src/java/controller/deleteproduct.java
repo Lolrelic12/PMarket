@@ -5,6 +5,7 @@
 
 package controller;
 
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author admin
  */
-public class listhistory extends HttpServlet {
+public class deleteproduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +34,10 @@ public class listhistory extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet listhistory</title>");  
+            out.println("<title>Servlet deleteproduct</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet listhistory at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet deleteproduct at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,7 +54,10 @@ public class listhistory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        ProductDAO pd = new ProductDAO();
+        int productId = Integer.parseInt(request.getParameter("productid"));
+        pd.removeProduct(productId);
+        request.getRequestDispatcher("management.jsp").forward(request, response);
     } 
 
     /** 

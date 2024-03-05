@@ -16,12 +16,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
+import dal.AccountDAO;
 
 /**
  *
  * @author admin
  */
-@WebFilter(filterName="EmailVerificationFilter", urlPatterns={"/*"})
 public class EmailVerificationFilter implements Filter {
 
     private static final boolean debug = true;
@@ -102,6 +106,20 @@ public class EmailVerificationFilter implements Filter {
 	if (debug) log("EmailVerificationFilter:doFilter()");
 
 	doBeforeProcessing(request, response);
+        
+        HttpServletRequest req = (HttpServletRequest)request;
+        HttpServletResponse res = (HttpServletResponse)response;
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userid") == null) {
+            res.sendRedirect("login.jsp");
+        } else {
+            AccountDAO ad = new AccountDAO();
+            int accountId = Integer.parseInt((String)session.getAttribute("userid"));
+            if (!ad.getVerifiedStatus(accountId)) {
+                res.sendRedirect("unverifiedemail.jsp");
+            }
+            
+        }
 	
 	Throwable problem = null;
 	try {
