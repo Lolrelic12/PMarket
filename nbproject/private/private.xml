@@ -3,22 +3,40 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/home.jsp</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/productdetails.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/addproduct.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/adminlogin.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/forgetpassword.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/management.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/model/Product.java</file>
             <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/history.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/deleteproduct.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/checkout.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/changepassword.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/changeemail.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/filter/EmailVerificationFilter.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/login.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/WEB-INF/web.xml</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/ProductDAO.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/changename.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/productdetails.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/home.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/com/PMarket.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/index.html</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/removefromcart.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/verifyemail.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/postpurchase.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/purchase.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/unverifiedemail.jsp</file>
             <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/com/ContentDelivery.java</file>
             <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/account.jsp</file>
             <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/listitems.java</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/checkout.jsp</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/login.jsp</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/filter/ProductAvailabilityFilter.java</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/dal/AccountDAO.java</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/listaccounts.java</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/WEB-INF/web.xml</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/search.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/controller/resetpassword.java</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/resetpassword.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/utility/Email.java</file>
             <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/register.jsp</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/src/java/model/Account.java</file>
             <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/cart.jsp</file>
-            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/productdetails.jsp</file>
+            <file>file:/D:/FPT%20University/2024,%20Spring/PRJ301/FinalsProject/PMarket/web/topup.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -8,12 +8,20 @@
         <url-pattern>/topup.jsp</url-pattern>
         <url-pattern>/history.jsp</url-pattern>
         <url-pattern>/checkout.jsp</url-pattern>
+        <url-pattern>/verifyemail.jsp</url-pattern>
+        <url-pattern>/checkout.jsp</url-pattern>
+        <url-pattern>/postpurchase.jsp</url-pattern>
+        <url-pattern>/unverifiedemail.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/management.jsp</url-pattern>
         <url-pattern>/deleteproduct</url-pattern>
         <url-pattern>/addproduct</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>EmailVerificationFilter</filter-name>
+        <url-pattern>/checkout.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>login</servlet-name>

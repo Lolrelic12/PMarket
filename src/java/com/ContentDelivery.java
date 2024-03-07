@@ -3,7 +3,7 @@ package com;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.Account;
-import ultility.Email;
+import utility.Email;
 
 public class ContentDelivery {
     private static final String senderName = "PMarket";
@@ -45,8 +45,8 @@ public class ContentDelivery {
         Email.sendMail(senderName, toAddress, subject, content);
     }
     
-    public static void sendPasswordResetConfirmation(String toAddress, String username, String displayName, String code) {
-        String subject = "Recent password reset for account " + username;
+    public static void sendSecurityAlert(String toAddress, String username, String displayName) {
+        String subject = "Security alert for account " + username;
 
         String content = "Hi " + displayName + ",\n\n";
         content += "The password for your account " + username + " has recently been updated.\n\n";

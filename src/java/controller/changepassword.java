@@ -4,6 +4,7 @@
  */
 package controller;
 
+import com.ContentDelivery;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -61,6 +62,7 @@ public class changepassword extends HttpServlet {
         AccountDAO ad = new AccountDAO();
 
         int userid = Integer.parseInt(request.getParameter("userid"));
+        Account a = ad.getAccountById(userid);
         String newPasswordHash = Hash.getHash(request.getParameter("newPassword"), "SHA-256");
         String confirmPasswordHash = Hash.getHash(request.getParameter("confirmPassword"), "SHA-256");
 
@@ -72,6 +74,7 @@ public class changepassword extends HttpServlet {
         }
 
         ad.changePassword(userid, newPasswordHash);
+        ContentDelivery.sendSecurityAlert(a.getEmail(), a.getUsername(), a.getDisplayName());
         request.getRequestDispatcher("login.jsp").forward(request, response);
         return;
     }
@@ -90,6 +93,7 @@ public class changepassword extends HttpServlet {
         AccountDAO ad = new AccountDAO();
 
         String username = request.getParameter("username");
+        Account a = ad.getAccountByUsername(username);
         String passwordHash = Hash.getHash(request.getParameter("password"), "SHA-256");
         String newPasswordHash = Hash.getHash(request.getParameter("newPassword"), "SHA-256");
         String confirmPasswordHash = Hash.getHash(request.getParameter("confirmPassword"), "SHA-256");
@@ -113,6 +117,7 @@ public class changepassword extends HttpServlet {
             return;
         } else if (credentialsMatch == 1) {
             ad.changePassword(ad.getAccountIdByUsername(username), newPasswordHash);
+            ContentDelivery.sendSecurityAlert(a.getEmail(), a.getUsername(), a.getDisplayName());
             request.getRequestDispatcher("account.jsp").forward(request, response);
             return;
         }

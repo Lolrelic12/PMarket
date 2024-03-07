@@ -69,7 +69,7 @@
                 %>
                 <tr>
                     <td><%= p.getProductId() %></td> 
-                    <td><img src="<%= p.getImageLink() %> alt="<%= p.getName() %>" width="150" height="60"></td>
+                    <td><img src="<%= p.getImageLink() %>" alt="<%= p.getName() %>" width="150" height="60"></td>
                     <td><%= p.getName() %></td>
                     <td><%= p.getPrice() %></td>
                     <td><a href="deleteproduct?productid=<%= p.getProductId() %>">Remove</a></td>
