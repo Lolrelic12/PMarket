@@ -144,4 +144,15 @@ public class ProductDAO extends DBContext {
         }
     }
     
+    
+    public void updateProduct(int productId, String name, String description, String imageLink, float price, int categoryId) {
+        String query = "update product set [name] = '" + name + "', [description] = '" + description + "', image_link = '" + imageLink +"', price = " + String.valueOf(price) + ", product_category_id = " + String.valueOf(categoryId) + " where product_id = " + String.valueOf(productId);
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+        
 }

@@ -18,6 +18,8 @@
         <url-pattern>/management.jsp</url-pattern>
         <url-pattern>/deleteproduct</url-pattern>
         <url-pattern>/addproduct</url-pattern>
+        <url-pattern>/updateproduct</url-pattern>
+        <url-pattern>/editproduct.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>EmailVerificationFilter</filter-name>
@@ -118,6 +120,10 @@
     <servlet>
         <servlet-name>addproduct</servlet-name>
         <servlet-class>controller.addproduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateproduct</servlet-name>
+        <servlet-class>controller.updateproduct</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -226,6 +232,10 @@
     <servlet-mapping>
         <servlet-name>addproduct</servlet-name>
         <url-pattern>/addproduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateproduct</servlet-name>
+        <url-pattern>/updateproduct</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

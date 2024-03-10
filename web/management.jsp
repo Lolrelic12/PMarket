@@ -60,6 +60,7 @@
                     <th>ID</th>
                     <th>Image</th>
                     <th>Name</th>
+                    <th>Category</th>
                     <th>Price</th>
                     <th>Action</th>
                 </tr>
@@ -71,8 +72,9 @@
                     <td><%= p.getProductId() %></td> 
                     <td><img src="<%= p.getImageLink() %>" alt="<%= p.getName() %>" width="150" height="60"></td>
                     <td><%= p.getName() %></td>
+                    <td><%= p.getCategory() %></td>
                     <td><%= p.getPrice() %></td>
-                    <td><a href="deleteproduct?productid=<%= p.getProductId() %>">Remove</a></td>
+                    <td><a href="editproduct.jsp?productid=<%= p.getProductId() %>">Details</a></td>
                 </tr>
                 <%}} else {%>
                 <p>No result found</p>
